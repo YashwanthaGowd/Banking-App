@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package transaction;
+
+option go_package = "github.com/banking-app/protos/generated/transaction;transactionpb";
+
+message Transaction {
+  string id = 1;
+  string account = 2;
+  string amount = 3;
+  string status = 4;
+}
+
+

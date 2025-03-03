@@ -1,0 +1,32 @@
+account-service:
+  server:
+    host: 0.0.0.0
+    port: 8080
+  postgres:
+    host: postgres
+    port: 5432
+    user: postgres
+    password: postgres
+    dbname: banking
+    sslmode: disable
+    uri: postgres://postgres:postgres@postgres:5432/banking?sslmode=disable
+  kafka:
+    brokers:
+      - kafka:29092  # Changed to internal Kafka port
+    topic: banking.transactions
+    batch_size: 100
+    batch_timeout: 10
+    required_acks: -1
+    async: false
+
+transaction-service:
+  server:
+    host: 0.0.0.0
+    port: 8081
+  mongodb:
+    uri: mongodb://mongodb:27017
+  kafka:
+    brokers:
+      - kafka:29092  # Changed to internal Kafka port
+    topic: banking.transactions
+    consumer_group: transaction-processor

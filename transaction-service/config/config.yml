@@ -1,0 +1,10 @@
+server:
+  host:  0.0.0.0
+  port: 8081
+mongodb:
+  uri: mongodb://mongodb:27017
+kafka:
+  brokers:
+    - kafka:29092  
+  topic: banking-transactions
+  consumer_group: transaction-processor

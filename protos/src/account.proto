@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package account;
+
+option go_package = "github.com/banking-app/protos/generated/account;accountpb";
+
+
+message Account {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string account_type = 5;
+  double balance = 6;  // Change from float to double
+  string status = 7;
+  string password = 8;
+}
+
+
+message User {
+  string first_name = 1;
+  string last_name = 2;
+  string email = 3;
+  string type = 4;
+  string password = 5;
+  string status = 6;
+}
+
+// Also update balance in these messages
+message CreateAccountRequest {
+  string password = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string type = 5;
+  double balance = 6;  // Change from float to double
+  string status = 7;
+}
+
+message UpdateAccountRequest {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+  string type = 5;
+  double balance = 6;  // Change from float to double
+  string status = 7;
+  string password = 8;
+}
+
+message DepositRequest {
+  string id = 1;
+  double amount = 2;  // Change from float to double
+}
+
+message WithdrawRequest {
+  string id = 1;
+  double amount = 2;  // Change from float to double
+}
+
+message GetAccountRequest {
+  string account = 1;
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message CreateUserRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string email = 3;
+  string type = 4;
+  string password = 5;
+}
+
+message UpdateUserRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string email = 3;
+  string type = 4;
+  string password = 5;
+  string status = 6;
+}
+
+message DisableUserRequest {
+  string user_id = 1;
+}
+
+message ActivateUserRequest {
+  string user_id = 1;
+}
+
