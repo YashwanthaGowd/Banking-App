@@ -12,12 +12,14 @@ account-service:
     uri: postgres://postgres:postgres@postgres:5432/banking?sslmode=disable
   kafka:
     brokers:
-      - kafka:29092  # Changed to internal Kafka port
+      - kafka:29092
     topic: banking.transactions
     batch_size: 100
     batch_timeout: 10
     required_acks: -1
     async: false
+  gateway:
+    transaction_base_url: http://transaction-service:8081/bankingapp/transactions
 
 transaction-service:
   server:
@@ -27,6 +29,6 @@ transaction-service:
     uri: mongodb://mongodb:27017
   kafka:
     brokers:
-      - kafka:29092  # Changed to internal Kafka port
+      - kafka:29092
     topic: banking.transactions
     consumer_group: transaction-processor

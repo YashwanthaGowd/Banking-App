@@ -6,11 +6,13 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/banking-app/account-service/src/config"
 	"github.com/banking-app/account-service/src/model"
 )
 
 type gateway struct {
 	transactionClient *http.Client
+	config config.Gateway
 }
 
 type Gateway interface {
@@ -19,16 +21,17 @@ type Gateway interface {
 	GetTransactionsbyMonthRange(accountId string, startMonth string, endMonth string) ([]model.Transaction, error)
 }
 
-func NewGateway() Gateway {
+func NewGateway(config *config.Config) Gateway {
 	client := &http.Client{}
 	return &gateway{
 		transactionClient: client,
+		config: config.Gateway,
 	}
 }
 
 
 func (g *gateway) GetTransactionbyId(transactionId string) (model.Transaction, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("http://localhost:8081/bankingapp/transactions/id/%s", transactionId), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/id/%s", g.config.TransactionBaseUrl, transactionId), nil)
 	if err != nil {
 		return model.Transaction{}, err
 	}
@@ -55,7 +58,7 @@ func (g *gateway) GetTransactionbyId(transactionId string) (model.Transaction, e
 
 
 func (g *gateway) GetTransactionsbyAccount(accountId string, count int) ([]model.Transaction, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("http://localhost:8081/bankingapp/transactions/history/%s/%d", accountId, count), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/history/%s/%d", g.config.TransactionBaseUrl, accountId, count), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +88,7 @@ func (g *gateway) GetTransactionsbyAccount(accountId string, count int) ([]model
 
 func (g *gateway) GetTransactionsbyMonthRange(accountId string, startMonth string, endMonth string) ([]model.Transaction, error) {
 
-	req, err := http.NewRequest("GET", fmt.Sprintf("http://localhost:8081/bankingapp/transactions/range/%s/%s/%s", accountId, startMonth, endMonth), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/range/%s/%s/%s", g.config.TransactionBaseUrl, accountId, startMonth, endMonth), nil)
 	if err != nil {
 		return nil, err
 	}

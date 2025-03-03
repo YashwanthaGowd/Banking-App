@@ -1,8 +1,8 @@
 server:
-  host: 0.0.0.0  # Changed from localhost
+  host: 0.0.0.0
   port: 8080
 postgres:
-  host: postgres  # Changed from localhost
+  host: postgres
   port: 5432
   user: postgres
   password: postgres
@@ -11,9 +11,11 @@ postgres:
   uri: postgres://postgres:postgres@postgres:5432/banking?sslmode=disable  # Updated host
 kafka:
   brokers:
-    - kafka:29092  # Changed to internal Kafka port
+    - kafka:29092
   topic: banking-transactions
   batch_size: 100
   batch_timeout: 10
   required_acks: -1
   async: false
+gateway:
+  transaction_base_url: http://transaction-service:8081/bankingapp/transactions

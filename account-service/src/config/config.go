@@ -8,10 +8,15 @@ import (
 )
 
 type Config struct {
+	Gateway   Gateway   `yaml:"gateway"`
 	Server   Server   `yaml:"server"`
 	MongoDB  MongoDB  `yaml:"mongodb"`
 	Postgres Postgres `yaml:"postgres"`
 	Kafka    Kafka    `yaml:"kafka"`
+}
+
+type Gateway struct {
+	TransactionBaseUrl string `yaml:"transaction_base_url"`
 }
 
 type Server struct {
